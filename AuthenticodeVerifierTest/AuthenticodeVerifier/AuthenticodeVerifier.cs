@@ -20,7 +20,17 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// <returns>검사 결과</returns>
         public override bool Verify()
         {
-            throw new System.NotImplementedException();
+            // 파일이 중간에 사라졌다면 false를 반환해 줄거에요.
+            if (!_signerVerifier.LoadTarget(_targetPath))
+            {
+                return false;
+            }
+            if (!_counterSignerVerifier.LoadTarget(_targetPath))
+            {
+                return false;
+            }
+
+            return _signerVerifier.Verify() && _counterSignerVerifier.Verify();
         }
 
         /// <summary>
