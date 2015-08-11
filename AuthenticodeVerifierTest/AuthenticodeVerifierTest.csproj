@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,8 @@
     <Compile Include="AuthenticodeVerifier\CounterSignerVerifier.cs" />
     <Compile Include="AuthenticodeVerifier\SignerVerifier.cs" />
     <Compile Include="AuthenticodeVerifier\Verifier.cs" />
+    <Compile Include="Certificates\CertificateInfo.cs" />
+    <Compile Include="Certificates\CertificateStore.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
