@@ -26,5 +26,11 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// 검사한 대상의 세부 정보를 콘솔에 출력합니다.
         /// </summary>
         public abstract void PrintResult();
+
+        /// <summary>
+        /// 검사할 대상을 지정합니다.
+        /// </summary>
+        /// <param name="filepath">대상의 경로(절대, 상대 모두 가능)</param>
+        public abstract bool LoadTarget(string filepath);
     }
 }

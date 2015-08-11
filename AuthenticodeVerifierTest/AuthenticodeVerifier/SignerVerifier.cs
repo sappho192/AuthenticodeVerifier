@@ -23,5 +23,10 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public override bool LoadTarget(string filepath)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

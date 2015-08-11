@@ -3,28 +3,28 @@
   <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.AuthenticodeVerifier" Collapsed="true">
     <Position X="1.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAASAAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAASQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\AuthenticodeVerifier.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.CounterSignerVerifier" Collapsed="true">
     <Position X="5.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\CounterSignerVerifier.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.SignerVerifier" Collapsed="true">
     <Position X="3.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\SignerVerifier.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.Verifier" Collapsed="true">
     <Position X="3.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\Verifier.cs</FileName>
     </TypeIdentifier>
   </Class>

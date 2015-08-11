@@ -38,6 +38,11 @@
             throw new System.NotImplementedException();
         }
 
+        public override bool LoadTarget(string filepath)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private SignerVerifier _signerVerifier;
         private CounterSignerVerifier _counterSignerVerifier;
     }
