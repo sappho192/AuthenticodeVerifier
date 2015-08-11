@@ -1,4 +1,6 @@
-﻿namespace AuthenticodeVerifierTest.AuthenticodeVerifier
+﻿using System.IO;
+
+namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
     /// <summary>
     /// MS Authenticode로 서명된 파일의 유효성을 검사하는 클래스입니다.
@@ -38,12 +40,16 @@
             throw new System.NotImplementedException();
         }
 
-        public override bool LoadTarget(string filepath)
+        public override bool LoadTarget(string filePath)
         {
-            throw new System.NotImplementedException();
+            if (!File.Exists(filePath)) return false;
+            _targetPath = filePath;
+            return true;
         }
 
         private SignerVerifier _signerVerifier;
         private CounterSignerVerifier _counterSignerVerifier;
+
+        private string _targetPath;
     }
 }

@@ -30,7 +30,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// <summary>
         /// 검사할 대상을 지정합니다.
         /// </summary>
-        /// <param name="filepath">대상의 경로(절대, 상대 모두 가능)</param>
-        public abstract bool LoadTarget(string filepath);
+        /// <param name="filePath">대상의 경로(절대, 상대 모두 가능)</param>
+        public abstract bool LoadTarget(string filePath);
     }
 }
