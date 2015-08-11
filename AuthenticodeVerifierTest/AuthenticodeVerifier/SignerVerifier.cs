@@ -1,4 +1,11 @@
-﻿using System.IO;
+﻿/*
+ * TaeIn Kim <sappho192@gmail.com>
+ * 2015-08-11
+ * 
+ * SignerVerifier 클래스
+ */
+
+using System.IO;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
