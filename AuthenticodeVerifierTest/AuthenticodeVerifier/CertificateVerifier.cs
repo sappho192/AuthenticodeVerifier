@@ -44,9 +44,9 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         private void Initialize()
         {
-            _basicCert = null;
-            _mainCert = null;
-            _keyChain = null;
+            _basicCert = null;  // 할당은 ExtractCert()에서...
+            _mainCert = null;   // 할당은 ExtractCert()에서...
+            _keyChain = new X509Chain();
         }
 
         private bool ExtractCert()
