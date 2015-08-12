@@ -46,6 +46,7 @@
     <Compile Include="AuthenticodeVerifier\CounterSignerVerifier.cs" />
     <Compile Include="AuthenticodeVerifier\SignerVerifier.cs" />
     <Compile Include="AuthenticodeVerifier\Verifier.cs" />
+    <Compile Include="AuthenticodeVerifier\WinCrypt32.cs" />
     <Compile Include="Certificates\CertificateInfo.cs" />
     <Compile Include="Certificates\CertificateStore.cs" />
     <Compile Include="Program.cs" />
