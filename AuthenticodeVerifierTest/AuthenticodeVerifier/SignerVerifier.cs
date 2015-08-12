@@ -14,6 +14,9 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
     /// </summary>
     public class SignerVerifier : Verifier
     {
+        /// <summary>
+        /// 기본 생성자입니다. LoadTarget()으로 파일을 부르고 Verify()를 호출해 검사를 진행하세요.
+        /// </summary>
         public SignerVerifier()
         {
         }
@@ -36,6 +39,10 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// 검사할 대상을 지정합니다. true가 반환되면 Verify()를 호출해 검사를 진행합니다.
+        /// </summary>
+        /// <param name="filePath">대상의 경로(절대, 상대 모두 가능)</param>
         public override bool LoadTarget(string filePath)
         {
             if (!File.Exists(filePath)) return false;

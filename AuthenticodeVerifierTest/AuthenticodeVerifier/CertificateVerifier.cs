@@ -8,6 +8,9 @@ using AuthenticodeVerifierTest.Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
+    /// <summary>
+    /// x509 인증서의 정보를 얻고 검증할 수 있는 클래스입니다.
+    /// </summary>
     public class CertificateVerifier : Verifier
     {
         public CertificateVerifier()

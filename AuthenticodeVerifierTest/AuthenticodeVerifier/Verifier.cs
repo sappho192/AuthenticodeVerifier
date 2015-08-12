@@ -9,6 +9,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
     /// <summary>
     /// 대상이 유효한지 검사할 수 있는 추상 클래스입니다.
+    /// LoadTarget()으로 파일을 부르고 Verify()를 호출해 검사를 진행합니다.
     /// </summary>
     public abstract class Verifier
     {
@@ -28,7 +29,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         public abstract void PrintResult();
 
         /// <summary>
-        /// 검사할 대상을 지정합니다.
+        /// 검사할 대상을 지정합니다. true가 반환되면 Verify()를 호출해 검사를 진행합니다.
         /// </summary>
         /// <param name="filePath">대상의 경로(절대, 상대 모두 가능)</param>
         public abstract bool LoadTarget(string filePath);
