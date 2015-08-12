@@ -82,17 +82,15 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                     foreach (X509ChainStatus chainStatus in _keyChain.ChainStatus)
                     {
                         //PrintLineConsole(string.Format("keyChain error: {0} {1}", chainStatus.Status, chainStatus.StatusInformation));
-                        if (chainStatus.Status == X509ChainStatusFlags.NotTimeValid)
+                        if (chainStatus.Status != X509ChainStatusFlags.NotTimeValid) continue;
+                        //PrintLineConsole("현재 인증서는 만료되었습니다.");
+                        //AddCertNote("현재 인증서는 만료되었습니다.");
+                        // 인증서 기한은 만료되었는데 부모 인증서들은 유효한 경우
+                        if (VerifyParentCert())
                         {
-                            //PrintLineConsole("현재 인증서는 만료되었습니다.");
-                            //AddCertNote("현재 인증서는 만료되었습니다.");
-                            // 인증서 기한은 만료되었는데 부모 인증서들은 유효한 경우
-                            if (VerifyParentCert())
-                            {
-                                //PrintLineConsole("부모 인증서는 유효합니다.");
-                                //AddCertNote("부모 인증서는 유효합니다.");
-                                return true;
-                            }
+                            //PrintLineConsole("부모 인증서는 유효합니다.");
+                            //AddCertNote("부모 인증서는 유효합니다.");
+                            return true;
                         }
                     }
                 }
