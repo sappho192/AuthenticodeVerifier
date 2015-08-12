@@ -5,6 +5,7 @@
  * CounterSignerVerifier 클래스
  */
 
+using System;
 using System.IO;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
@@ -33,7 +34,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override void PrintResult()
         {
-            throw new System.NotImplementedException();
+            Console.Write(GetResult());
         }
 
         /// <summary>

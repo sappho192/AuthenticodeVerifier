@@ -5,7 +5,10 @@
  * AuthenticodeVerifier 클래스
  */
 
+using System;
+using System.Collections.Generic;
 using System.IO;
+using AuthenticodeVerifierTest.Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
@@ -58,7 +61,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// </summary>
         public override void PrintResult()
         {
-            throw new System.NotImplementedException();
+            Console.Write(GetResult());
         }
 
         /// <summary>
@@ -77,6 +80,13 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             _signerVerifier = new SignerVerifier();
             _counterSignerVerifier = new CounterSignerVerifier();
         }
+
+        public CertificateInfo CertificateInfo
+        {
+            get { return _signerVerifier.CertificateInfo; }
+        }
+
+        public CertificateInfo CounterCertificateInfo { get; set; }
 
         private SignerVerifier _signerVerifier;
         private CounterSignerVerifier _counterSignerVerifier;
