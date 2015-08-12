@@ -17,8 +17,6 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
     {
         public AuthenticodeVerifier()
         {
-            _signerVerifier = new SignerVerifier();
-            _counterSignerVerifier = new CounterSignerVerifier();
         }
 
         /// <summary>
@@ -27,6 +25,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// <returns>검사 결과</returns>
         public override bool Verify()
         {
+            Initialize();
             // 파일이 중간에 사라졌다면 false를 반환해 줄거에요.
             if (!_signerVerifier.LoadTarget(_targetPath))
             {
@@ -62,6 +61,12 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             if (!File.Exists(filePath)) return false;
             _targetPath = filePath;
             return true;
+        }
+
+        public void Initialize()
+        {
+            _signerVerifier = new SignerVerifier();
+            _counterSignerVerifier = new CounterSignerVerifier();
         }
 
         private SignerVerifier _signerVerifier;

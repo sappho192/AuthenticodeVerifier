@@ -20,7 +20,10 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override bool Verify()
         {
-            throw new System.NotImplementedException();
+            Initialize();
+            _certificateVerifier.LoadTarget(_targetPath);
+
+            return _certificateVerifier.Verify();
         }
 
         public override string GetResult()
@@ -40,6 +43,12 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             return true;
         }
 
+        private void Initialize()
+        {
+            _certificateVerifier = new CertificateVerifier();
+        }
+
         private string _targetPath;
+        private CertificateVerifier _certificateVerifier;
     }
 }

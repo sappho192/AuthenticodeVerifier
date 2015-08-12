@@ -49,6 +49,7 @@
     <Compile Include="AuthenticodeVerifier\WinCrypt32.cs" />
     <Compile Include="Certificates\CertificateInfo.cs" />
     <Compile Include="Certificates\CertificateStore.cs" />
+    <Compile Include="AuthenticodeVerifier\CertificateVerifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
