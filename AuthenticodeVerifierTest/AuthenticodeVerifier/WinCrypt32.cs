@@ -137,7 +137,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                 }
 
                 /* contentType = 10; CERT_QUERY_CONTENT_PKCS7_SIGNED_EMBED 
-                 * encodingType = 65537; PKCS_7_ASN_ENCODING | X509_ASN_ENCODING (65535 + 1)
+                 * encodingType = 65537; PKCS_7_ASN_ENCODING | X509_ASN_ENCODING (65536 + 1)
                  */
 
                 //Console.WriteLine("Querying file '{0}':", filePath);
