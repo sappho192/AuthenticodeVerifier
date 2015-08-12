@@ -1,31 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.AuthenticodeVerifier" Collapsed="true">
-    <Position X="1.25" Y="2" Width="1.5" />
+  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.AuthenticodeVerifier">
+    <Position X="1.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAASQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAASQAAAAQAAQAAAAAAAAAABAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\AuthenticodeVerifier.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.CounterSignerVerifier" Collapsed="true">
-    <Position X="5.75" Y="2" Width="1.5" />
+  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.CertificateVerifier">
+    <Position X="6.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AIAAEQIYAASAAQAAgAAAAAAABAAABAAEAEIAAACAAAA=</HashCode>
+      <FileName>AuthenticodeVerifier\CertificateVerifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.CounterSignerVerifier">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAQAAQAAAAAAAAAABAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\CounterSignerVerifier.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.SignerVerifier" Collapsed="true">
-    <Position X="3.5" Y="2" Width="1.5" />
+  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.SignerVerifier">
+    <Position X="4" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAQAAQAAAAAAAAAABAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAQAASAAAAAAAAAABAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\SignerVerifier.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.Verifier" Collapsed="true">
-    <Position X="3.5" Y="0.75" Width="1.5" />
+    <Position X="5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAQAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>AuthenticodeVerifier\Verifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthenticodeVerifierTest.AuthenticodeVerifier.WinCrypt32" Collapsed="true">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oaAMsp+QBAhwJAdEACLiIEkpBBQ0jCCcNAHQQAEgmWo=</HashCode>
+      <FileName>AuthenticodeVerifier\WinCrypt32.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthenticodeVerifierTest.Certificates.CertificateInfo">
+    <Position X="10.75" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEgAACAAAAAAAAAAMAAAAAAAAEAEAAAAAQgAAQBAAg=</HashCode>
+      <FileName>Certificates\CertificateInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthenticodeVerifierTest.Certificates.CertificateStore" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Certificates\CertificateStore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthenticodeVerifierTest.Program" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="맑은 고딕" Size="9" />
