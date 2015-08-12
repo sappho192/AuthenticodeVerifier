@@ -31,12 +31,14 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             {
                 return false;
             }
-            if (!_counterSignerVerifier.LoadTarget(_targetPath))
-            {
-                return false;
-            }
+            //if (!_counterSignerVerifier.LoadTarget(_targetPath))
+            //{
+            //    return false;
+            //}
 
-            return _signerVerifier.Verify() && _counterSignerVerifier.Verify();
+            return _signerVerifier.Verify()
+                //&& _counterSignerVerifier.Verify()
+                ;
         }
 
         /// <summary>
