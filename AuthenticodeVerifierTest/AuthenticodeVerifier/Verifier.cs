@@ -29,7 +29,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         public abstract void PrintResult();
 
         /// <summary>
-        /// 검사할 대상을 지정합니다. true가 반환되면 Verify()를 호출해 검사를 진행합니다.
+        /// 검사할 대상을 지정합니다. true가 반환되면 Verify()를 호출해 검사를 진행하세요.
         /// </summary>
         /// <param name="filePath">대상의 경로(절대, 상대 모두 가능)</param>
         public abstract bool LoadTarget(string filePath);

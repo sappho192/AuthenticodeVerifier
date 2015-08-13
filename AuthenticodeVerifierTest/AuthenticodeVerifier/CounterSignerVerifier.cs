@@ -7,6 +7,9 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography.Pkcs;
+using System.Security.Cryptography.X509Certificates;
+using AuthenticodeVerifierTest.Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
@@ -24,7 +27,27 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override bool Verify()
         {
-            throw new System.NotImplementedException();
+            // 마지막으로 한 번 더 하는 경로 검증
+            if (_targetPath == null || !LoadTarget(_targetPath))
+            {
+                return false;
+            }
+
+            Initialize();
+            // 연대 서명으로부터 인증서, 타임스탬프 등의 정보를 가져옴
+            if (!WinCrypt32.GetCounterSignerInfo(_targetPath, ref _counterCertificate, ref SigningTime))
+            {
+                return false;
+            }
+
+            // 연대 서명의 인증서를 가져와서 CertificateVerifier로 검사해야함
+            _counterCertificateVerifier.LoadTargetDirect(_counterCertificate);
+            if (_counterCertificateVerifier.VerifyDirect())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override string GetResult()
@@ -48,6 +71,23 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             return true;
         }
 
+        private void Initialize()
+        {
+            _counterCertificateVerifier = new CertificateVerifier();
+            _counterCertificate = null;
+            SigningTime = null;
+        }
+
+        public bool ResultCertificate { get; set; }
+
+        public CertificateInfo CertificateInfo
+        {
+            get { return _counterCertificateVerifier.CertificateInfo; }
+        }
+        public Pkcs9SigningTime SigningTime;
+
         private string _targetPath;
+        private CertificateVerifier _counterCertificateVerifier;
+        private X509Certificate2 _counterCertificate;
     }
 }
