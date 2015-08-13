@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Text.RegularExpressions;
 using AuthenticodeVerifierTest.Certificates;
 
@@ -30,12 +31,16 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override string GetResult()
         {
-            throw new NotImplementedException();
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("[디지털 서명]");
+            stringBuilder.AppendLine("유효 여부: " + (ResultPrimary || ResultAdvanced ? "유효" : "무효"));
+
+            return stringBuilder.ToString();
         }
 
         public override void PrintResult()
         {
-            throw new NotImplementedException();
+            Console.Write(GetResult());
         }
 
         public override bool LoadTarget(string filePath)
