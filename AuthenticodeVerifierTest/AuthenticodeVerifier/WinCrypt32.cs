@@ -11,6 +11,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.Pkcs;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
@@ -19,7 +20,13 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
     /// </summary>
     static class WinCrypt32
     {
-        public static Pkcs9SigningTime GetSigningTime(string filePath)
+        /// <summary>
+        /// 연대 서명과 관련된 정보를 반환합니다.
+        /// </summary>
+        /// <param name="filePath">연대 서명이 포함된 파일의 경로입니다.</param>
+        /// <param name="counterCertificate">연대 서명의 인증서입니다.</param>
+        /// <param name="signingTime">UTC+0 기준에서의 서명 시간입니다.</param>
+        public static bool GetCounterSignerInfo(string filePath, ref X509Certificate2 counterCertificate, ref Pkcs9SigningTime signingTime)
         {
             try
             {
@@ -92,30 +99,38 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                     foreach (var unsignedAttribute in signerInfo.UnsignedAttributes)
                     {
                         if (unsignedAttribute.Oid.Value != szOID_RSA_counterSign) continue;
+
+                        // 하나 이상의 연대 서명이 존재하는 파일이 만약 있다면 Collection을 반환하도록 다시 짜야함
                         foreach (var counterSignInfo in signerInfo.CounterSignerInfos)
                         {
                             // 연대 서명 정보 얻는 부분
-                            //counterSignInfo.Certificate.
+                            counterCertificate = counterSignInfo.Certificate;   // 연대 서명의 인증서
+
                             foreach (var signedAttribute in counterSignInfo.SignedAttributes)
                             {
                                 if (signedAttribute.Oid.Value == szOID_RSA_signingTime)
                                 {
-                                    Pkcs9SigningTime signingTime = (Pkcs9SigningTime)signedAttribute.Values[0];
+                                    // 연대 서명의 서명시간
+                                    signingTime = (Pkcs9SigningTime)signedAttribute.Values[0];
                                     //Console.Out.WriteLine("Signing Time UTC: " + signingTime.SigningTime);
-                                    return signingTime;
+                                    
                                 }
-                                //if(signedAttribute.Oid.Value == szOID_RSA_counterSign)
                             }
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (Win32Exception ex)
             {
-                // no logging
+                // 해당 파일에 연대 서명 정보가 없는 경우
+                if (ex.HResult == 0x80004005 || ex.HResult == -2147467259)
+                {
+                    return false;
+                }
+                throw;  // 겪어본 적 없는 예외
             }
 
-            return null;
+            return true;
         }
 
         [StructLayout(LayoutKind.Sequential)]
