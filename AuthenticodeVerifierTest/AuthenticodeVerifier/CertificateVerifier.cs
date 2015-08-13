@@ -259,7 +259,6 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// <returns>부모 인증서의 URL</returns>
         public string GetParentCertURL()
         {
-            string result;
             string rawData = _mainCert.ToString(true);
 
             int start = rawData.IndexOf("Authority Info Access", StringComparison.Ordinal);
@@ -272,9 +271,10 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             rawData = rawData.Substring(start, rawData.Length - start);
 
             Match match = Regex.Match(rawData, @"URL=(.{0,}crt)");
-            result = match.Groups[1].Value;
+            if (match.Groups.Count >= 1) return match.Groups[1].Value;
 
-            return result;
+            AddCertNote("부모 인증서의 URL이 CRT파일을 가리키고 있지 않습니다. 추가 구현이 필요합니다.");
+            return "null";
         }
 
         /// <summary>
