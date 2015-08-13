@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.Pkcs;
 
 namespace AuthenticodeVerifierTest.Certificates
 {
@@ -19,7 +18,6 @@ namespace AuthenticodeVerifierTest.Certificates
         public CertificateInfo()
         {
             Notes = new List<string>();
-            TimeStamp = new List<Pkcs9SigningTime>();
         }
 
         public void PrintInfo()
@@ -31,9 +29,16 @@ namespace AuthenticodeVerifierTest.Certificates
                 Console.WriteLine("기본 검증결과: " + VerifiedResultPrimary);
                 Console.WriteLine("세부 검증결과: " + VerifiedResultAdvanced);
                 Console.WriteLine("[비고]");
-                foreach (var note in Notes)
+                if (Notes.Count > 0)
                 {
-                    Console.WriteLine(note);
+                    foreach (var note in Notes)
+                    {
+                        Console.WriteLine(note);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("특이 사항이 없었습니다.");
                 }
                 Console.WriteLine("지문: " + ThumbPrint);
                 Console.WriteLine("일련번호: " + SerialNumber);
@@ -43,12 +48,6 @@ namespace AuthenticodeVerifierTest.Certificates
                 Console.WriteLine("서명자: " + Subject);
                 Console.WriteLine("발급자: " + Issuer);
                 Console.WriteLine("발급자 인증서: " + IssuerCertificateURL);
-                Console.WriteLine("[타임스탬프]");
-                foreach (var 정보 in TimeStamp)
-                {
-                    Console.WriteLine(정보.SigningTime);
-                }
-                Console.WriteLine();
             }
         }
 
@@ -63,6 +62,5 @@ namespace AuthenticodeVerifierTest.Certificates
         public string Subject { get; set; }
         public string Issuer { get; set; }
         public string IssuerCertificateURL { get; set; }
-        public List<Pkcs9SigningTime> TimeStamp { get; set; }
     }
 }

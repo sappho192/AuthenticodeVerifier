@@ -26,6 +26,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             ResultPrimary = _mainCert.Verify();
             if (!ResultPrimary) ResultAdvanced = VerifyAdvanced();   // 기본 검증에 실패했을 때만 수행
 
+            GetCertInfo();
             return ResultPrimary || ResultAdvanced;
         }
 
@@ -55,6 +56,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             _basicCert = null;  // 할당은 ExtractCert()에서...
             _mainCert = null;   // 할당은 ExtractCert()에서...
             _keyChain = new X509Chain();
+            CertificateInfo = new CertificateInfo();
         }
 
         private bool ExtractCert()
@@ -89,12 +91,12 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                         //PrintLineConsole(string.Format("keyChain error: {0} {1}", chainStatus.Status, chainStatus.StatusInformation));
                         if (chainStatus.Status != X509ChainStatusFlags.NotTimeValid) continue;
                         //PrintLineConsole("현재 인증서는 만료되었습니다.");
-                        //AddCertNote("현재 인증서는 만료되었습니다.");
+                        AddCertNote("현재 인증서는 만료되었습니다.");
                         // 인증서 기한은 만료되었는데 부모 인증서들은 유효한 경우
                         if (VerifyParentCert())
                         {
                             //PrintLineConsole("부모 인증서는 유효합니다.");
-                            //AddCertNote("부모 인증서는 유효합니다.");
+                            AddCertNote("부모 인증서는 유효합니다.");
                             return true;
                         }
                     }
@@ -153,7 +155,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                 {
                     //PrintLineConsole("파일 다운로드에 실패했습니다.");
                     //PrintLineConsole("사유: " + ex.Message);
-                    //AddCertNote("부모 인증서를 다운로드하지 못했습니다.");
+                    AddCertNote("부모 인증서를 다운로드하지 못했습니다.");
                     return false;
                 }
             }
@@ -203,7 +205,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                     }
                 }
                 //PrintLineConsole("부모 인증서가 로컬 저장소에 존재합니다.");
-                //AddCertNote("부모 인증서가 로컬 저장소에 존재합니다.");
+                AddCertNote("부모 인증서가 로컬 저장소에 존재합니다.");
 
                 if (cert.Verify()) return true;
             }
@@ -225,7 +227,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                     }
                 }
                 //PrintLineConsole("부모 인증서가 로컬 저장소에 존재합니다.");
-                //AddCertNote("부모 인증서가 로컬 저장소에 존재합니다.");
+                AddCertNote("부모 인증서가 로컬 저장소에 존재합니다.");
 
                 if (cert.Verify()) return true;
             }
@@ -247,7 +249,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                     }
                 }
                 //PrintLineConsole("부모 인증서가 로컬 저장소에 존재합니다.");
-                //AddCertNote("부모 인증서가 로컬 저장소에 존재합니다.");
+                AddCertNote("부모 인증서가 로컬 저장소에 존재합니다.");
 
                 if (cert.Verify()) return true;
             }
@@ -267,12 +269,12 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             {
                 if (silently)
                 {
-                    return "";
+                    return "null";
                 }
 
                 //PrintLineConsole("부모 인증서의 URL이 존재하지 않습니다.");
-                //AddCertNote("부모 인증서의 URL이 존재하지 않습니다.");
-                return "";
+                AddCertNote("부모 인증서의 URL이 존재하지 않습니다.");
+                return "null";
             }
             rawData = rawData.Substring(start, rawData.Length - start);
 
@@ -280,6 +282,32 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             result = match.Groups[1].Value;
 
             return result;
+        }
+
+        /// <summary>
+        /// 인증서를 검증하는 중에 발생한 특이사항을 보존합니다.
+        /// </summary>
+        /// <param name="reason"></param>
+        private void AddCertNote(string reason)
+        {
+            CertificateInfo.Notes.Add(reason);
+        }
+
+        /// <summary>
+        /// 인증서의 정보 및 검증 결과를 CertificateInfo에 저장합니다.
+        /// </summary>
+        private void GetCertInfo()
+        {
+            CertificateInfo.VerifiedResultPrimary = ResultPrimary;
+            CertificateInfo.VerifiedResultAdvanced = ResultAdvanced;
+            CertificateInfo.ThumbPrint = _mainCert.Thumbprint;
+            CertificateInfo.SerialNumber = _mainCert.SerialNumber;
+            CertificateInfo.Algorithm = _mainCert.SignatureAlgorithm.FriendlyName;
+            CertificateInfo.DateEffective = _mainCert.GetEffectiveDateString();
+            CertificateInfo.DateExpiry = _mainCert.GetExpirationDateString();
+            CertificateInfo.Subject = _mainCert.SubjectName.Name;
+            CertificateInfo.Issuer = _mainCert.IssuerName.Name;
+            CertificateInfo.IssuerCertificateURL = GetParentCertURL(true);
         }
 
         private string _targetPath;
@@ -290,5 +318,6 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public bool ResultPrimary { get; set; }
         public bool ResultAdvanced { get; set; }
+        public CertificateInfo CertificateInfo { get; set; }
     }
 }
