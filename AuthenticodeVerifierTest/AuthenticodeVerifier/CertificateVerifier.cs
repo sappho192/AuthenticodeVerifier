@@ -104,7 +104,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(ex.ToString());
+                AddCertNote("CertificateVerifier::VerifyAdvanced(): " + ex);
             }
             return false;
         }
@@ -153,9 +153,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                 }
                 catch (WebException ex)
                 {
-                    //PrintLineConsole("파일 다운로드에 실패했습니다.");
-                    //PrintLineConsole("사유: " + ex.Message);
-                    AddCertNote("부모 인증서를 다운로드하지 못했습니다.");
+                    AddCertNote("부모 인증서를 다운로드하지 못했습니다. 사유: " + ex.Message);
                     return false;
                 }
             }
