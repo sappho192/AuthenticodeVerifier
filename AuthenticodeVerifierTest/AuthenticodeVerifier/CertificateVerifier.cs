@@ -33,7 +33,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         public override string GetResult()
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("[디지털 서명]");
+            stringBuilder.AppendLine("[디지털 인증서]");
             stringBuilder.AppendLine("유효 여부: " + (ResultPrimary || ResultAdvanced ? "유효" : "무효"));
 
             return stringBuilder.ToString();
