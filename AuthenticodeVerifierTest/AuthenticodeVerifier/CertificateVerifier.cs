@@ -251,6 +251,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
                 if (cert.Verify()) return true;
             }
+            AddCertNote("부모 인증서가 유효하지 않습니다.");
             return false;
         }
         /// <summary>
