@@ -138,7 +138,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         private bool VerifyParentCertURL()
         {
             string url = GetParentCertURL();
-            if (url.Equals(""))
+            if (url.Equals("null"))
             {
                 return false;
             }
@@ -256,10 +256,10 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             return false;
         }
         /// <summary>
-        /// 부모 인증서를 받을 수 있는 주소를 반환합니다.
+        /// 부모 인증서를 받을 수 있는 주소를 반환합니다. 없으면 "null"을 반환합니다.
         /// </summary>
         /// <returns>부모 인증서의 URL</returns>
-        public string GetParentCertURL(bool silently = false)
+        public string GetParentCertURL()
         {
             string result;
             string rawData = _mainCert.ToString(true);
@@ -267,11 +267,6 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             int start = rawData.IndexOf("Authority Info Access", StringComparison.Ordinal);
             if (start < 0)
             {
-                if (silently)
-                {
-                    return "null";
-                }
-
                 //PrintLineConsole("부모 인증서의 URL이 존재하지 않습니다.");
                 AddCertNote("부모 인증서의 URL이 존재하지 않습니다.");
                 return "null";
@@ -307,7 +302,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             CertificateInfo.DateExpiry = _mainCert.GetExpirationDateString();
             CertificateInfo.Subject = _mainCert.SubjectName.Name;
             CertificateInfo.Issuer = _mainCert.IssuerName.Name;
-            CertificateInfo.IssuerCertificateURL = GetParentCertURL(true);
+            CertificateInfo.IssuerCertificateURL = GetParentCertURL();
         }
 
         private string _targetPath;
