@@ -37,14 +37,15 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             {
                 return false;
             }
-            //if (!_counterSignerVerifier.LoadTarget(_targetPath))
-            //{
-            //    return false;
-            //}
+            if (!_counterSignerVerifier.LoadTarget(_targetPath))
+            {
+                return false;
+            }
 
-            return _signerVerifier.Verify()
-                //&& _counterSignerVerifier.Verify()
-                ;
+            var signerResult = _signerVerifier.Verify();
+            var counterSignerResult = _counterSignerVerifier.Verify();
+
+            return signerResult || counterSignerResult;
         }
 
         /// <summary>
@@ -86,7 +87,10 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             get { return _signerVerifier.CertificateInfo; }
         }
 
-        public CertificateInfo CounterCertificateInfo { get; set; }
+        public CertificateInfo CounterCertificateInfo
+        {
+            get { return _counterSignerVerifier.CertificateInfo; }
+        }
 
         private SignerVerifier _signerVerifier;
         private CounterSignerVerifier _counterSignerVerifier;
