@@ -25,6 +25,12 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override bool Verify()
         {
+            // 마지막으로 한 번 더 하는 경로 검증
+            if (_targetPath == null || !LoadTarget(_targetPath))
+            {
+                return false;
+            }
+
             Initialize();
             _certificateVerifier.LoadTarget(_targetPath);
 
