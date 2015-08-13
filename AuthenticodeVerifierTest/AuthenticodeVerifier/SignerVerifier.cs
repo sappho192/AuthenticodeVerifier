@@ -33,7 +33,9 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override string GetResult()
         {
-            throw new System.NotImplementedException();
+            var result = _certificateVerifier.GetResult();
+
+            return result;
         }
 
         public override void PrintResult()
