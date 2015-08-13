@@ -123,7 +123,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             catch (Win32Exception ex)
             {
                 // 해당 파일에 연대 서명 정보가 없는 경우
-                if (ex.HResult == 0x80004005 || ex.HResult == -2147467259)
+                if (ex.HResult == -2147467259) // ex.HResult == 0x80004005
                 {
                     return false;
                 }
