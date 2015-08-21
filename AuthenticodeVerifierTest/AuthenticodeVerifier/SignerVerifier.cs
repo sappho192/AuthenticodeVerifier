@@ -7,6 +7,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using AuthenticodeVerifierTest.Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
@@ -39,9 +40,11 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override string GetResult()
         {
-            var result = _certificateVerifier.GetResult();
+            var result = new StringBuilder();
+            result.AppendLine("[디지털 서명 구역]");
+            result.AppendLine(_certificateVerifier.GetResult());
 
-            return result;
+            return result.ToString();
         }
 
         public override void PrintResult()

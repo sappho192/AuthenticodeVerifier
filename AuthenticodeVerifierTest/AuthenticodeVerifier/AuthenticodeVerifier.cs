@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Text;
 using AuthenticodeVerifierTest.Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
@@ -32,6 +34,11 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         public override bool Verify()
         {
             Initialize();
+            if (!LoadTarget(_targetPath))
+            {
+                return false;
+            }
+
             // 파일이 중간에 사라졌다면 false를 반환해 줄거에요.
             if (!_signerVerifier.LoadTarget(_targetPath))
             {
@@ -41,6 +48,8 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             {
                 return false;
             }
+
+            GatherFileVersionInfo();
 
             var signerResult = _signerVerifier.Verify();
             var counterSignerResult = _counterSignerVerifier.Verify();
@@ -55,8 +64,9 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         public override string GetResult()
         {
             string result;
-            result = _signerVerifier.GetResult();
-            result = _counterSignerVerifier.GetResult();
+            result = GetFileVersionInfo();
+            result += _signerVerifier.GetResult();
+            result += _counterSignerVerifier.GetResult();
 
             return result;
         }
@@ -80,10 +90,42 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             return true;
         }
 
+        /// <summary>
+        /// 초기화 작업을 진행합니다.
+        /// </summary>
         public void Initialize()
         {
             _signerVerifier = new SignerVerifier();
             _counterSignerVerifier = new CounterSignerVerifier();
+        }
+
+        /// <summary>
+        /// 해당 파일의 정보를 FileVersionInfo 클래스를 이용해 가져옵니다.
+        /// </summary>
+        private void GatherFileVersionInfo()
+        {
+            FileVersionInfo = FileVersionInfo.GetVersionInfo(_targetPath);
+        }
+
+        public string GetFileVersionInfo()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Copyright: " + FileVersionInfo.LegalCopyright);
+            stringBuilder.AppendLine("Publisher: " + FileVersionInfo.CompanyName);
+            stringBuilder.AppendLine("Product: " + FileVersionInfo.ProductName);
+            stringBuilder.AppendLine("Original name: " + FileVersionInfo.OriginalFilename);
+            stringBuilder.AppendLine("Internal name: " + FileVersionInfo.InternalName);
+            stringBuilder.AppendLine("File Version: " + FileVersionInfo.FileMajorPart
+                + "-" + FileVersionInfo.FileMinorPart
+                + "(" + FileVersionInfo.FilePrivatePart + ")");
+            stringBuilder.AppendLine("Description: " + FileVersionInfo.FileDescription);
+
+            return stringBuilder.ToString();
+        }
+
+        public void PrintFileVersionInfo()
+        {
+            Console.WriteLine(GetFileVersionInfo());
         }
 
         public CertificateInfo CertificateInfo
@@ -95,6 +137,8 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         {
             get { return _counterSignerVerifier.CertificateInfo; }
         }
+
+        public FileVersionInfo FileVersionInfo { get; set; }
 
         private SignerVerifier _signerVerifier;
         private CounterSignerVerifier _counterSignerVerifier;

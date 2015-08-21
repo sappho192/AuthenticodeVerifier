@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography.Pkcs;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using AuthenticodeVerifierTest.Certificates;
 
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
@@ -52,7 +53,10 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override string GetResult()
         {
-            return _counterCertificateVerifier.GetResult();
+            var result = new StringBuilder();
+            result.AppendLine("[연대 서명 구역]");
+            result.AppendLine(_counterCertificateVerifier.GetResult());
+            return result.ToString();
         }
 
         public override void PrintResult()
