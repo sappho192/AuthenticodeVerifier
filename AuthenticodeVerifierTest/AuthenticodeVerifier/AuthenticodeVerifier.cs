@@ -54,7 +54,11 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         /// <returns></returns>
         public override string GetResult()
         {
-            throw new System.NotImplementedException();
+            string result;
+            result = _signerVerifier.GetResult();
+            result = _counterSignerVerifier.GetResult();
+
+            return result;
         }
 
         /// <summary>

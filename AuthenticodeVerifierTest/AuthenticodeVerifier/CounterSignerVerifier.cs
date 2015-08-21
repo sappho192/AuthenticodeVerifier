@@ -52,7 +52,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 
         public override string GetResult()
         {
-            throw new System.NotImplementedException();
+            return _counterCertificateVerifier.GetResult();
         }
 
         public override void PrintResult()
