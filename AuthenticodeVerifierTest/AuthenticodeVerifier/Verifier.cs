@@ -13,10 +13,17 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
     /// </summary>
     public abstract class Verifier
     {
+        /// <summary>
+        /// 기본 클래스
+        /// </summary>
         protected Verifier()
         {
         }
 
+        /// <summary>
+        /// 대상을 검사하고 결과를 반환합니다.
+        /// </summary>
+        /// <returns></returns>
         public abstract bool Verify();
         /// <summary>
         /// 검사한 대상의 세부 정보를 문자열로 반환합니다.
