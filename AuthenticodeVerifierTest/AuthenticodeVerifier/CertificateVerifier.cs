@@ -81,6 +81,7 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
         public void LoadTargetDirect(X509Certificate2 target)
         {
             _mainCert = target;
+            _parentCertURL = GetParentCertURL();
         }
 
         /// <summary>
