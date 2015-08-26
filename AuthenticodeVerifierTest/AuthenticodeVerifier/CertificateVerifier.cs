@@ -207,36 +207,63 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
                 return false;
             }
             Match match = Regex.Match(url, @".{0,}\/(.{0,}.crt)");
-            string fileName = match.Groups[1].Value;
-
-            using (var client = new WebClient())
+            if (match.Groups.Count > 1)
             {
+                string fileName = match.Groups[1].Value;
+
+                using (var client = new WebClient())
+                {
+                    try
+                    {
+                        client.DownloadFile(url, fileName);
+                    }
+                    catch (WebException ex)
+                    {
+                        AddCertNote("부모 인증서를 다운로드하지 못했습니다. 사유: " + ex.Message);
+                        return false;
+                    }
+                }
+
+                CertificateVerifier parentVerifier = new CertificateVerifier();
+                if (!parentVerifier.LoadTarget(fileName)) return false;
+                if (!parentVerifier.Verify()) return false;
+
+                // 검증을 위해 임시로 받았던 부모 인증서를 제거
+                if (!File.Exists(fileName)) return true;
                 try
                 {
-                    client.DownloadFile(url, fileName);
+                    File.Delete(fileName);
                 }
-                catch (WebException ex)
+                catch (IOException ex)
                 {
-                    AddCertNote("부모 인증서를 다운로드하지 못했습니다. 사유: " + ex.Message);
-                    return false;
+                    Console.WriteLine(ex.Message);
                 }
+                return true;
             }
-
-            CertificateVerifier parentVerifier = new CertificateVerifier();
-            if (!parentVerifier.LoadTarget(fileName)) return false;
-            if (!parentVerifier.Verify()) return false;
-
-            // 검증을 위해 임시로 받았던 부모 인증서를 제거
-            if (!File.Exists(fileName)) return true;
-            try
+            if (url.IndexOf(@"http://ocsp", StringComparison.Ordinal) > -1)
             {
-                File.Delete(fileName);
+                throw new NotImplementedException("현재 개발중입니다.");
+
+                //try
+                //{
+                //    OCSPRequest request = new OCSPRequest(_mainCert, new Uri(url));
+                //    OCSPResponse response = request.SendRequest();
+                //    switch (response.Responses[0].CertStatus)
+                //    {
+                //        case CertificateStatus.Good:
+                //            AddCertNote("연대 서명이 유효합니다.");
+                //            return true;
+                //        case CertificateStatus.Revoked:
+                //            AddCertNote("연대 서명이 유효하지 않습니다.");
+                //            break;
+                //    }
+                //}
+                //catch (System.Exception ex)
+                //{
+
+                //}
             }
-            catch (IOException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return true;
+            return false;
         }
 
         /// <summary>
