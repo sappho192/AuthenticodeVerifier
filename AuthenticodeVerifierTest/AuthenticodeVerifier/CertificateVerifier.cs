@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AuthenticodeVerifierTest.Certificates;
 
+using PKI.OCSP;
+
 namespace AuthenticodeVerifierTest.AuthenticodeVerifier
 {
     /// <summary>
@@ -242,26 +244,26 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             }
             if (url.IndexOf(@"http://ocsp", StringComparison.Ordinal) > -1)
             {
-                throw new NotImplementedException("현재 개발중입니다.");
+                //throw new NotImplementedException("현재 개발중입니다.");
 
-                //try
-                //{
-                //    OCSPRequest request = new OCSPRequest(_mainCert, new Uri(url));
-                //    OCSPResponse response = request.SendRequest();
-                //    switch (response.Responses[0].CertStatus)
-                //    {
-                //        case CertificateStatus.Good:
-                //            AddCertNote("연대 서명이 유효합니다.");
-                //            return true;
-                //        case CertificateStatus.Revoked:
-                //            AddCertNote("연대 서명이 유효하지 않습니다.");
-                //            break;
-                //    }
-                //}
-                //catch (System.Exception ex)
-                //{
+                try
+                {
+                    OCSPRequest request = new OCSPRequest(_mainCert, new Uri(url));
+                    OCSPResponse response = request.SendRequest();
+                    switch (response.Responses[0].CertStatus)
+                    {
+                        case CertificateStatus.Good:
+                            AddCertNote("연대 서명이 유효합니다.");
+                            return true;
+                        case CertificateStatus.Revoked:
+                            AddCertNote("연대 서명이 유효하지 않습니다.");
+                            break;
+                    }
+                }
+                catch (System.Exception ex)
+                {
 
-                //}
+                }
             }
             return false;
         }
@@ -348,6 +350,9 @@ namespace AuthenticodeVerifierTest.AuthenticodeVerifier
             rawData = rawData.Substring(start, rawData.Length - start);
 
             Match match = Regex.Match(rawData, @"URL=(.{0,}crt)");
+            if (match.Groups.Count > 1) return match.Groups[1].Value;
+
+            match = Regex.Match(rawData, @"URL=(http:\/\/ocsp\..{0,})\r");
             if (match.Groups.Count > 1) return match.Groups[1].Value;
 
             AddCertNote("부모 인증서의 URL이 CRT파일을 가리키고 있지 않습니다. 추가 구현이 필요합니다.");

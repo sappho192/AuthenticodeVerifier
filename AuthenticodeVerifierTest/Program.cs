@@ -14,11 +14,11 @@ namespace AuthenticodeVerifierTest
             //verifier.CertificateInfo.PrintInfo();
             //verifier.CounterCertificateInfo.PrintInfo();
 
-            verifier.LoadTarget(@"C:\temp\msvcr110.dll");
-            Console.WriteLine(verifier.Verify());
-            Console.WriteLine(verifier.GetResult());
-            verifier.CertificateInfo.PrintInfo();
-            verifier.CounterCertificateInfo.PrintInfo();
+            //verifier.LoadTarget(@"C:\temp\msvcr110.dll");
+            //Console.WriteLine(verifier.Verify());
+            //Console.WriteLine(verifier.GetResult());
+            //verifier.CertificateInfo.PrintInfo();
+            //verifier.CounterCertificateInfo.PrintInfo();
 
             //verifier.LoadTarget(@"C:\temp\siegfried.exe");
             //Console.WriteLine(verifier.Verify());
@@ -29,6 +29,11 @@ namespace AuthenticodeVerifierTest
             //Console.WriteLine(verifier.Verify());
             //verifier.CertificateInfo.PrintInfo();
             //verifier.CounterCertificateInfo.PrintInfo();
+
+            verifier.LoadTarget(@"C:\temp\MSCOMCTL.OCX");
+            Console.WriteLine(verifier.Verify());
+            verifier.CertificateInfo.PrintInfo();
+            verifier.CounterCertificateInfo.PrintInfo();
         }
     }
 }
